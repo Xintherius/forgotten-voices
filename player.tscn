@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dd6301np2w3pe"]
+[gd_scene load_steps=7 format=3 uid="uid://dd6301np2w3pe"]
 
 [ext_resource type="Texture2D" uid="uid://dlodmwbutmxi7" path="res://assets/sprites/Player/Char_iddle.png" id="1_r5h7o"]
 [ext_resource type="Script" path="res://assets/scripts/player.gd" id="1_ub73q"]
@@ -26,10 +26,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jen2g"]
-radius = 54.0833
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bka1x"]
-distance = -8.0
+radius = 63.1981
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_ub73q")
@@ -39,16 +36,7 @@ position = Vector2(91, -112)
 sprite_frames = SubResource("SpriteFrames_t0pnb")
 animation = &"idle"
 autoplay = "idle"
-frame = 1
-frame_progress = 0.56769
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(93, -79)
+position = Vector2(93, -67)
 shape = SubResource("CircleShape2D_jen2g")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(98, -4)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(3, 39)
-shape = SubResource("WorldBoundaryShape2D_bka1x")
