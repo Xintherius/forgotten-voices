@@ -154,6 +154,7 @@ radius = 63.1981
 script = ExtResource("1_ub73q")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 5
 position = Vector2(86, -112)
 sprite_frames = SubResource("SpriteFrames_t0pnb")
 animation = &"jump"

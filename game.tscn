@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://c6kwgui67by0y"]
+[gd_scene load_steps=12 format=4 uid="uid://c6kwgui67by0y"]
 
 [ext_resource type="PackedScene" uid="uid://dd6301np2w3pe" path="res://player.tscn" id="1_h5ny8"]
 [ext_resource type="Texture2D" uid="uid://hbs8omayjbtx" path="res://assets/sprites/Blocks.png" id="2_rx2dl"]
 [ext_resource type="PackedScene" uid="uid://bwmk23oy2cued" path="res://killzone.tscn" id="3_rf468"]
 [ext_resource type="FontFile" uid="uid://dksxgrewknxlj" path="res://Font/PixelifySans-VariableFont_wght.ttf" id="4_jmn8o"]
+[ext_resource type="PackedScene" uid="uid://bn4eemhbw86n8" path="res://Platform.tscn" id="5_bbj3x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hd684"]
 texture = ExtResource("2_rx2dl")
@@ -30,6 +31,45 @@ sources/0 = SubResource("TileSetAtlasSource_hd684")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bfa4x"]
 distance = -1.0
 
+[sub_resource type="Animation" id="Animation_6ondm"]
+resource_name = "move"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.96667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2115, 345), Vector2(2115, 24)]
+}
+
+[sub_resource type="Animation" id="Animation_5jux6"]
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2633, -46), Vector2(2625, -418)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kgkva"]
+_data = {
+"RESET": SubResource("Animation_5jux6"),
+"move": SubResource("Animation_6ondm")
+}
+
 [node name="Game" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -45,7 +85,7 @@ tile_set = SubResource("TileSet_moj42")
 [node name="Player" parent="." instance=ExtResource("1_h5ny8")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(560, -295)
+position = Vector2(560, -182)
 zoom = Vector2(0.83, 0.83)
 limit_left = -300
 limit_bottom = 300
@@ -93,3 +133,21 @@ offset_bottom = -341.0
 theme_override_fonts/font = ExtResource("4_jmn8o")
 theme_override_font_sizes/font_size = 50
 text = "Have some fun"
+
+[node name="AnimatableBody2D" parent="." instance=ExtResource("5_bbj3x")]
+position = Vector2(2633, -46)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D"]
+libraries = {
+"": SubResource("AnimationLibrary_kgkva")
+}
+autoplay = "move"
+
+[node name="AnimatableBody2D2" parent="." instance=ExtResource("5_bbj3x")]
+position = Vector2(2633, -46)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D2"]
+libraries = {
+"": SubResource("AnimationLibrary_kgkva")
+}
+autoplay = "RESET"
