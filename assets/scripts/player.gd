@@ -7,6 +7,7 @@ const JUMP_VELOCITY = -500.0
 @onready var original_position: Vector2 = animated_sprite.position  # Store the original position
 
 func _physics_process(delta: float) -> void:
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -20,19 +21,30 @@ func _physics_process(delta: float) -> void:
 
 	if direction > 0:
 		animated_sprite.flip_h = false
+	
 	elif direction < 0:
 		animated_sprite.flip_h = true
+		
 
-	# Play animations and adjust position
-	if direction == 0:
-		animated_sprite.play("idle")
-		animated_sprite.scale = Vector2(1, 1)  # Adjust the scale for the idle animation
-		animated_sprite.position = original_position  # Reset to original position
+	if is_on_floor():
+		# Play animations and adjust position
+		if direction == 0:
+			animated_sprite.play("idle")
+			animated_sprite.scale = Vector2(1, 1)  # Adjust the scale for the idle animation
+			animated_sprite.position = original_position  # Reset to original position
+		else:
+			animated_sprite.play("run")
+			animated_sprite.scale = Vector2(4, 4)  # Reset to default scale for the run animation
+			animated_sprite.position = original_position + Vector2(0, 20)  # Lower the position for the run animation
 	else:
-		animated_sprite.play("run")
+		
+		animated_sprite.play("jump")
 		animated_sprite.scale = Vector2(4, 4)  # Reset to default scale for the run animation
 		animated_sprite.position = original_position + Vector2(0, 20)  # Lower the position for the run animation
+		
+	
 
+	
 	# Apply movement
 	if direction:
 		velocity.x = direction * SPEED
