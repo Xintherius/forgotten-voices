@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://6ordnrcgp4bk"]
+
+[ext_resource type="Texture2D" uid="uid://ce3nsxvb85y81" path="res://assets/sprites/Monster/Monster_attack.png" id="1_ti0jc"]
+[ext_resource type="PackedScene" uid="uid://bwmk23oy2cued" path="res://killzone.tscn" id="2_4ckvp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cb6h"]
+atlas = ExtResource("1_ti0jc")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imfbr"]
+atlas = ExtResource("1_ti0jc")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25qcf"]
+atlas = ExtResource("1_ti0jc")
+region = Rect2(256, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8tyi"]
+atlas = ExtResource("1_ti0jc")
+region = Rect2(0, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1phr"]
+atlas = ExtResource("1_ti0jc")
+region = Rect2(128, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjvv8"]
+atlas = ExtResource("1_ti0jc")
+region = Rect2(256, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbb78"]
+atlas = ExtResource("1_ti0jc")
+region = Rect2(0, 128, 128, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tl8wm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cb6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_imfbr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25qcf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8tyi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1phr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjvv8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xbb78")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlw3i"]
+size = Vector2(31.5429, 49)
+
+[node name="Monster" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(9.49998, -142)
+scale = Vector2(4.00781, 4.875)
+sprite_frames = SubResource("SpriteFrames_tl8wm")
+animation = &"idle"
+autoplay = "idle"
+frame = 5
+frame_progress = 0.14402
+
+[node name="Killzone" parent="AnimatedSprite2D" instance=ExtResource("2_4ckvp")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Killzone"]
+position = Vector2(15.8441, 4.10256)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_tlw3i")

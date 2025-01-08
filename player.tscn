@@ -157,10 +157,8 @@ script = ExtResource("1_ub73q")
 z_index = 5
 position = Vector2(86, -112)
 sprite_frames = SubResource("SpriteFrames_t0pnb")
-animation = &"jump"
+animation = &"idle"
 autoplay = "idle"
-frame = 6
-frame_progress = 0.75799
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(87, -67)
