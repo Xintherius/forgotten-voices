@@ -3,6 +3,11 @@ extends CharacterBody2D
 const SPEED = 500.0
 const JUMP_VELOCITY = -500.0
 
+var enemy_inattack_range = false
+var enemy_attack_cooldown = true
+var health = 100
+var player_alive = true
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var original_position: Vector2 = animated_sprite.position  # Store the original position
 
@@ -52,3 +57,16 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+
+func _on_player_hitbox_body_entered(body):
+	if body.has_method("enemy"):
+		enemy_inattack_range = true
+
+
+func _on_player_hitbox_body_exited(body:):
+	if body.has_method("enemy"):
+		enemy_inattack_range = false
+
+func enemy_attack():
+	pass

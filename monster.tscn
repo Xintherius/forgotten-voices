@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://6ordnrcgp4bk"]
+[gd_scene load_steps=19 format=3 uid="uid://6ordnrcgp4bk"]
 
 [ext_resource type="Texture2D" uid="uid://ce3nsxvb85y81" path="res://assets/sprites/Monster/Monster_attack.png" id="1_ti0jc"]
 [ext_resource type="Script" path="res://monster.gd" id="1_wnudb"]
@@ -100,6 +100,9 @@ radius = 350.006
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilxw1"]
 size = Vector2(59, 150)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ukgcf"]
+size = Vector2(127, 257)
+
 [node name="Monster" type="Node2D"]
 script = ExtResource("1_wnudb")
 
@@ -122,6 +125,12 @@ shape = SubResource("CircleShape2D_621cs")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.5, -108)
 shape = SubResource("RectangleShape2D_ilxw1")
+
+[node name="enemy_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox"]
+position = Vector2(4, -120)
+shape = SubResource("RectangleShape2D_ukgcf")
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_entered" from="detection_area" to="AnimatedSprite2D" method="_on_detection_area_body_entered"]
