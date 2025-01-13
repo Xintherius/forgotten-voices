@@ -151,6 +151,8 @@ animations = [{
 radius = 63.1981
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_ub73q")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -163,8 +165,3 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(87, -67)
 shape = SubResource("CircleShape2D_jen2g")
-
-[node name="Wallchecker" type="RayCast2D" parent="."]
-position = Vector2(87, -86)
-rotation = -1.5708
-target_position = Vector2(1, 80)
