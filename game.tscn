@@ -120,7 +120,7 @@ offset_right = 3458.0
 offset_bottom = -736.0
 theme_override_fonts/font = ExtResource("4_jmn8o")
 theme_override_font_sizes/font_size = 50
-text = "Why are you hurting me?"
+text = "Attack with F"
 
 [node name="Enemies2" type="Label" parent="Labels"]
 offset_left = 3927.0

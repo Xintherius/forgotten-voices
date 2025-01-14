@@ -1,9 +1,41 @@
-[gd_scene load_steps=25 format=3 uid="uid://dd6301np2w3pe"]
+[gd_scene load_steps=31 format=3 uid="uid://dd6301np2w3pe"]
 
 [ext_resource type="Texture2D" uid="uid://dlodmwbutmxi7" path="res://assets/sprites/Player/Char_iddle.png" id="1_r5h7o"]
 [ext_resource type="Script" path="res://assets/scripts/player.gd" id="1_ub73q"]
+[ext_resource type="Texture2D" uid="uid://d1snxgq1775mt" path="res://assets/sprites/Player/Char_attack.png" id="2_1yq1j"]
 [ext_resource type="Texture2D" uid="uid://csdh4qasciipx" path="res://assets/sprites/Player/Char_jump.png" id="3_yn55l"]
 [ext_resource type="Texture2D" uid="uid://beg85eahtjyb5" path="res://assets/sprites/Player/Char_running.png" id="4_3lfnv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7t5k0"]
+size = Vector2(82.8203, 59.4945)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rcdo"]
+atlas = ExtResource("2_1yq1j")
+region = Rect2(0, 0, 66, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15ygo"]
+atlas = ExtResource("2_1yq1j")
+region = Rect2(66, 0, 66, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4a4fn"]
+atlas = ExtResource("2_1yq1j")
+region = Rect2(132, 0, 66, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6feb"]
+atlas = ExtResource("2_1yq1j")
+region = Rect2(198, 0, 66, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb53j"]
+atlas = ExtResource("2_1yq1j")
+region = Rect2(0, 65, 66, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1bo3"]
+atlas = ExtResource("2_1yq1j")
+region = Rect2(66, 65, 66, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puhmm"]
+atlas = ExtResource("2_1yq1j")
+region = Rect2(132, 65, 66, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kj6mj"]
 atlas = ExtResource("1_r5h7o")
@@ -61,20 +93,34 @@ region = Rect2(128, 0, 64, 64)
 atlas = ExtResource("4_3lfnv")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5w4he"]
-atlas = ExtResource("3_yn55l")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cifij"]
-atlas = ExtResource("3_yn55l")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_113o4"]
-atlas = ExtResource("3_yn55l")
-region = Rect2(256, 0, 64, 64)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_t0pnb"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rcdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15ygo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a4fn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6feb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb53j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1bo3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puhmm")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kj6mj")
@@ -131,20 +177,6 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5w4he")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cifij")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_113o4")
-}],
-"loop": true,
-"name": &"wall",
-"speed": 2.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jen2g"]
@@ -154,15 +186,25 @@ radius = 63.1981
 radius = 110.073
 
 [node name="Player" type="CharacterBody2D"]
+position = Vector2(28, -16)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_ub73q")
+
+[node name="AttackArea" type="Area2D" parent="."]
+position = Vector2(35, -13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(197.379, -120.552)
+rotation = -0.380482
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_7t5k0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 5
 position = Vector2(86, -112)
 sprite_frames = SubResource("SpriteFrames_t0pnb")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -175,5 +217,11 @@ shape = SubResource("CircleShape2D_jen2g")
 position = Vector2(83, -97)
 shape = SubResource("CircleShape2D_f2g1x")
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.55
+one_shot = true
+
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
+[connection signal="ready" from="Timer" to="." method="_on_timer_ready"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
