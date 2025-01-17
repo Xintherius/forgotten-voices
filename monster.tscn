@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://6ordnrcgp4bk"]
+[gd_scene load_steps=19 format=3 uid="uid://6ordnrcgp4bk"]
 
 [ext_resource type="Texture2D" uid="uid://ce3nsxvb85y81" path="res://assets/sprites/Monster/Monster_attack.png" id="1_ti0jc"]
-[ext_resource type="PackedScene" uid="uid://bwmk23oy2cued" path="res://killzone.tscn" id="2_4ckvp"]
+[ext_resource type="Script" path="res://monster.gd" id="1_wnudb"]
+[ext_resource type="Texture2D" uid="uid://cxqunngbhpfyk" path="res://assets/sprites/Monster/Monster_walk.png" id="2_nlsup"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7cb6h"]
 atlas = ExtResource("1_ti0jc")
@@ -31,6 +32,22 @@ region = Rect2(256, 64, 128, 64)
 atlas = ExtResource("1_ti0jc")
 region = Rect2(0, 128, 128, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3f3qh"]
+atlas = ExtResource("2_nlsup")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0d1g"]
+atlas = ExtResource("2_nlsup")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0w8lf"]
+atlas = ExtResource("2_nlsup")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pt0s"]
+atlas = ExtResource("2_nlsup")
+region = Rect2(192, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_tl8wm"]
 animations = [{
 "frames": [{
@@ -56,27 +73,66 @@ animations = [{
 "texture": SubResource("AtlasTexture_xbb78")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3f3qh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0d1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0w8lf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pt0s")
+}],
+"loop": true,
+"name": &"run",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlw3i"]
-size = Vector2(31.5429, 49)
+[sub_resource type="CircleShape2D" id="CircleShape2D_621cs"]
+radius = 350.006
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ilxw1"]
+size = Vector2(59, 150)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ukgcf"]
+size = Vector2(127, 257)
 
 [node name="Monster" type="Node2D"]
+script = ExtResource("1_wnudb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(9.49998, -142)
+position = Vector2(18, -103)
 scale = Vector2(4.00781, 4.875)
 sprite_frames = SubResource("SpriteFrames_tl8wm")
-animation = &"idle"
-autoplay = "idle"
-frame = 5
-frame_progress = 0.14402
+animation = &"run"
+frame = 2
+frame_progress = 0.568051
 
-[node name="Killzone" parent="AnimatedSprite2D" instance=ExtResource("2_4ckvp")]
+[node name="detection_area" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Killzone"]
-position = Vector2(15.8441, 4.10256)
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_tlw3i")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+position = Vector2(-1, -108)
+shape = SubResource("CircleShape2D_621cs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, -108)
+shape = SubResource("RectangleShape2D_ilxw1")
+
+[node name="enemy_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox"]
+position = Vector2(4, -120)
+shape = SubResource("RectangleShape2D_ukgcf")
+
+[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_entered" from="detection_area" to="AnimatedSprite2D" method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_exited" from="detection_area" to="AnimatedSprite2D" method="_on_detection_area_body_exited"]
